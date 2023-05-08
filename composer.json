@@ -1,0 +1,10 @@
+{
+  "name": "progressus/avatax-excise-xi",
+  "license": "GPL-3.0",
+  "type": "wordpress-plugin",
+  "autoload": {
+    "psr-4": {
+      "AvataxWooCommerce\\": "src/"
+    }
+  }
+}
