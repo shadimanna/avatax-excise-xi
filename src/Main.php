@@ -90,6 +90,9 @@ class Main {
 		$this->define( 'AVATAX_WC_PLUGIN_DIR_PATH', untrailingslashit( plugin_dir_path( AVATAX_WC_PLUGIN_FILE ) ) );
 		$this->define( 'AVATAX_WC_PLUGIN_DIR_URL', untrailingslashit( plugins_url( '/', AVATAX_WC_PLUGIN_FILE ) ) );
 
+		// API defines.
+		$this->define( 'AVATAX_WC_SANDBOX_API_URL', 'https://excisesbx.avalara.com' );
+		$this->define( 'AVATAX_WC_PROD_API_URL', 'https://excise.avalara.com' );
 
 		$this->define( 'AVATAX_WC_VERSION', $this->version );
 		$this->define( 'AVATAX_PLUGIN_NAME', $this->plugin_name );
