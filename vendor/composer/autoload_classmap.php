@@ -8,6 +8,9 @@ $baseDir = dirname($vendorDir);
 return array(
     'AvataxWooCommerce\\Main' => $baseDir . '/src/Main.php',
     'AvataxWooCommerce\\Product\\Single' => $baseDir . '/src/Product/Single.php',
+    'AvataxWooCommerce\\Rest_API\\Base' => $baseDir . '/src/Rest_API/Base.php',
+    'AvataxWooCommerce\\Rest_API\\Base_Info' => $baseDir . '/src/Rest_API/Base_Info.php',
+    'AvataxWooCommerce\\Settings\\Settings' => $baseDir . '/src/Settings/Settings.php',
     'AvataxWooCommerce\\Utils' => $baseDir . '/src/Utils.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
 );
