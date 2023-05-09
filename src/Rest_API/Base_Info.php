@@ -17,6 +17,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package AvataxWooCommerce\Rest_API
  */
 abstract class Base_Info {
+	/**
+	 * API args.
+	 *
+	 * @var array.
+	 */
+	protected $api_args;
 
 	/**
 	 * Class constructor.
