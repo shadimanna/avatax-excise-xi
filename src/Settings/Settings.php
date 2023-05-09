@@ -7,8 +7,6 @@
 
 namespace AvataxWooCommerce\Settings;
 
-use AvataxWooCommerce\Utils;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -19,6 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @package AvataxWooCommerce\Settings
  */
 class Settings {
+	/**
+	 * The unique instance of the class.
+	 *
+	 * @var Settings.
+	 */
+	private static $instance;
+
 	/**
 	 * Init and hook in the integration.
 	 */
@@ -32,6 +37,19 @@ class Settings {
 	public function init_hooks() {
 		add_filter( 'woocommerce_get_sections_tax', array( $this, 'add_setting_section' ) );
 		add_action( 'woocommerce_get_settings_tax', array( $this, 'setting_fields' ), 10, 2 );
+	}
+
+	/**
+	 * Gets an instance of the settings.
+	 *
+	 * @return Settings
+	 */
+	public static function get_instance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
 	}
 
 	/**
@@ -66,12 +84,12 @@ class Settings {
 			),
 			// Account Settings.
 			array(
-				'id'    => 'account_settings_title',
+				'id'    => 'avatax_account_settings_title',
 				'title' => esc_html__( 'Account Settings', 'avatax-excise-xi' ),
 				'type'  => 'title',
 			),
 			array(
-				'id'          => 'environment_mode',
+				'id'          => 'avatax_environment_mode',
 				'title'       => esc_html__( 'Environment Mode', 'avatax-excise-xi' ),
 				'type'        => 'select',
 				'description' => __( 'Choose the environment mode.', 'avatax-excise-xi' ),
@@ -85,7 +103,7 @@ class Settings {
 				'placeholder' => '',
 			),
 			array(
-				'id'          => 'account_username',
+				'id'          => 'avatax_account_username',
 				'title'       => esc_html__( 'Account username', 'avatax-excise-xi' ),
 				'type'        => 'text',
 				'description' => '',
@@ -94,7 +112,7 @@ class Settings {
 				'placeholder' => '',
 			),
 			array(
-				'id'          => 'account_password',
+				'id'          => 'avatax_account_password',
 				'title'       => esc_html__( 'Account password', 'avatax-excise-xi' ),
 				'type'        => 'text',
 				'description' => '',
@@ -103,7 +121,7 @@ class Settings {
 				'placeholder' => '',
 			),
 			array(
-				'id'          => 'avalara_client',
+				'id'          => 'avatax_avalara_client',
 				'title'       => esc_html__( 'Avalara Client', 'avatax-excise-xi' ),
 				'type'        => 'text',
 				'description' => '',
@@ -121,16 +139,43 @@ class Settings {
 	/**
 	 * Return true if sandbox mode is ticked.
 	 *
-	 * @return String
+	 * @return string.
 	 */
 	public function get_environment_mode() {
-		return get_option( 'environment_mode' );
+		return get_option( 'avatax_environment_mode' );
+	}
+
+	/**
+	 * Get Avatax account username.
+	 *
+	 * @return string.
+	 */
+	public function get_account_username() {
+		return get_option( 'avatax_account_username' );
+	}
+
+	/**
+	 * Get Avatax account password.
+	 *
+	 * @return string.
+	 */
+	public function get_account_password() {
+		return get_option( 'avatax_account_password' );
+	}
+
+	/**
+	 * Get Avatax account password.
+	 *
+	 * @return string.
+	 */
+	public function get_avalara_client() {
+		return get_option( 'avatax_avalara_client' );
 	}
 
 	/**
 	 * Return true if sandbox mode is ticked.
 	 *
-	 * @return Bool
+	 * @return bool.
 	 */
 	public function is_sandbox() {
 		return ( 'sandbox' === $this->get_environment_mode() );
