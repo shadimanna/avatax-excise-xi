@@ -21,14 +21,6 @@ class ComposerStaticInitbaf7c4b3a16ba5e9a69b5e39f9ac3fbb
     );
 
     public static $classMap = array (
-        'AvataxWooCommerce\\Main' => __DIR__ . '/../..' . '/src/Main.php',
-        'AvataxWooCommerce\\Product\\Single' => __DIR__ . '/../..' . '/src/Product/Single.php',
-        'AvataxWooCommerce\\Rest_API\\Base' => __DIR__ . '/../..' . '/src/Rest_API/Base.php',
-        'AvataxWooCommerce\\Rest_API\\Base_Info' => __DIR__ . '/../..' . '/src/Rest_API/Base_Info.php',
-        'AvataxWooCommerce\\Rest_API\\Excise\\Item_Info' => __DIR__ . '/../..' . '/src/Rest_API/Excise/Item_Info.php',
-        'AvataxWooCommerce\\Rest_API\\Excise\\Transactions' => __DIR__ . '/../..' . '/src/Rest_API/Excise/Transactions.php',
-        'AvataxWooCommerce\\Settings\\Settings' => __DIR__ . '/../..' . '/src/Settings/Settings.php',
-        'AvataxWooCommerce\\Utils' => __DIR__ . '/../..' . '/src/Utils.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
