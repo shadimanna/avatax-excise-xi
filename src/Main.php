@@ -51,7 +51,7 @@ class Main {
 	 * @var Product\Single
 	 */
 	public $product = null;
-	
+
 	/**
 	 * Instance to call certain functions globally within the plugin
 	 *
@@ -117,6 +117,7 @@ class Main {
 	public function init() {
 		$this->get_plugin_settings();
 		$this->get_product_settings();
+		$this->get_frontend();
 	}
 
 	/**
@@ -159,7 +160,7 @@ class Main {
 
 		return $this->settings;
 	}
-	
+
 	/**
 	 * Define constant if not already set.
 	 *
@@ -181,5 +182,11 @@ class Main {
 			<p><?php esc_html_e( 'Avatax plugin requires WooCommerce to be installed and activated!', 'avatax-excise-xi' ); ?></p>
 		</div>
 		<?php
+	}
+	/**
+	 * Get frontend class.
+	 */
+	public function get_frontend() {
+		new  Frontend\Cart();
 	}
 }
