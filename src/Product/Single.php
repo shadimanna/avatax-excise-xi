@@ -35,30 +35,37 @@ class Single {
 	public static function product_field_maps() {
 		return array(
 			array(
-				'id'          => '_avatax_product_code',
-				'type'        => 'text',
-				// translators: %s will be replaced by plugin name.
-				'label'       => sprintf( esc_html__( 'Product Code (%s)', 'avatax-for-woocommerce' ), AVATAX_PLUGIN_NAME ),
-				'description' => esc_html__( 'ProductCode that ATE recognizes, or any alternate mapped value.', 'avatax-excise-xi' ),
-				'desc_tip'    => 'true',
-				'placeholder' => 'Product Code',
-			),
-			array(
 				'id'          => '_avatax_unit_of_measure',
 				'type'        => 'select',
-				'label'       => sprintf( esc_html__( 'Unit Of Measure (%s)', 'avatax-for-woocommerce' ), AVATAX_PLUGIN_NAME ),
-				'description' => esc_html__( 'Unit Of Measure.', ' avatax-excise-xi' ),
+				'label'       => sprintf( esc_html__( 'Unit Of Measure (%s)', 'avatax-excise-xi' ), AVATAX_PLUGIN_NAME ),
+				'description' => esc_html__( 'Unit Of Measure.', 'avatax-excise-xi' ),
 				'desc_tip'    => 'true',
 				'options'     => Utils::get_units_of_measure(),
 			),
 			array(
 				'id'          => '_avatax_qty_unit_of_measure',
 				'type'        => 'select',
-				'label'       => sprintf( esc_html__( 'Unit of Measure for sub-units (%s)', 'avatax-for-woocommerce' ), AVATAX_PLUGIN_NAME ),
+				'label'       => sprintf( esc_html__( 'Unit of Measure for sub-units (%s)', 'avatax-excise-xi' ), AVATAX_PLUGIN_NAME ),
 				'description' => esc_html__( 'Unit of Measure for sub-units.', 'avatax-excise-xi' ),
 				'desc_tip'    => 'true',
 				'options'     => Utils::get_sub_units_of_measure(),
 				'default'     => 'EA',
+			),
+			array(
+				'id'          => '_avatax_unit_volume',
+				'type'        => 'number',
+				'label'       => sprintf( esc_html__( 'Unit Volume', 'avatax-excise-xi' ), AVATAX_PLUGIN_NAME ),
+				'description' => esc_html__( 'Unit volume.', 'avatax-excise-xi' ),
+				'desc_tip'    => 'true',
+			),
+			array(
+				'id'          => '_avatax_volume_unit_of_measure',
+				'type'        => 'select',
+				'label'       => esc_html__( 'Volume unit of Measure', 'avatax-excise-xi' ),
+				'description' => esc_html__( 'Volume unit of Measure.', 'avatax-excise-xi' ),
+				'desc_tip'    => 'true',
+				'options'     => Utils::get_units_of_measure(),
+				'default'     => '',
 			),
 		);
 	}
