@@ -22,7 +22,7 @@ abstract class Base_Info {
 	 *
 	 * @var array.
 	 */
-	protected $api_args;
+	protected array $api_args;
 
 	/**
 	 * Class constructor.
@@ -34,6 +34,7 @@ abstract class Base_Info {
 	public function __construct( $data ) {
 		$this->convert_data_to_args( $data );
 		$this->set_extra_data_to_api_args();
+		$this->set_store_address_data();
 		$this->parse_args();
 	}
 
@@ -55,5 +56,17 @@ abstract class Base_Info {
 	 * Set extra API args.
 	 */
 	public function set_extra_data_to_api_args() {
+	}
+
+	/**
+	 * Set API args with store address data from WC settings.
+	 */
+	public function set_store_address_data() {
+		$this->api_args['store_address'] = array(
+			'city'      => WC()->countries->get_base_city(),
+			'state'     => WC()->countries->get_base_state(),
+			'country'   => WC()->countries->get_base_country(),
+			'postcode'  => WC()->countries->get_base_postcode(),
+		);
 	}
 }
