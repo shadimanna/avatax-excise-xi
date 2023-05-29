@@ -117,6 +117,7 @@ class Main {
 	public function init() {
 		$this->get_plugin_settings();
 		$this->get_product_settings();
+		$this->get_frontend();
 	}
 
 	/**
@@ -158,6 +159,13 @@ class Main {
 		}
 
 		return $this->settings;
+	}
+
+	/**
+	 * Get frontend class.
+	 */
+	public function get_frontend() {
+		new Frontend\Cart();
 	}
 	
 	/**
