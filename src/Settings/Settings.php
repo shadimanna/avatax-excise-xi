@@ -121,8 +121,8 @@ class Settings {
 				'placeholder' => '',
 			),
 			array(
-				'id'          => 'avatax_avalara_client',
-				'title'       => esc_html__( 'Avalara Client', 'avatax-excise-xi' ),
+				'id'          => 'avatax_avalara_company_id',
+				'title'       => esc_html__( 'Avalara Company ID', 'avatax-excise-xi' ),
 				'type'        => 'text',
 				'description' => '',
 				'desc_tip'    => true,
@@ -168,8 +168,8 @@ class Settings {
 	 *
 	 * @return string.
 	 */
-	public function get_avalara_client() {
-		return get_option( 'avatax_avalara_client' );
+	public function get_avalara_company_id() {
+		return get_option( 'avatax_avalara_company_id' );
 	}
 
 	/**
