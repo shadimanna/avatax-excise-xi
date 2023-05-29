@@ -7,6 +7,7 @@
 
 namespace AvataxWooCommerce\Rest_API;
 
+use AvataxWooCommerce\Rest_API\Transaction\Item_Info;
 use AvataxWooCommerce\Settings\Settings;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -43,7 +44,7 @@ class Base {
 	/**
 	 * Item Info.
 	 *
-	 * @var array.
+	 * @var Item_Info.
 	 */
 	public $item_info;
 
@@ -71,7 +72,7 @@ class Base {
 	/**
 	 * Class constructor.
 	 *
-	 * @param Base_Info $item_info Set of Item_Info.
+	 * @param  Base_Info  $item_info  Set of Item_Info.
 	 */
 	public function __construct( $item_info ) {
 		$this->settings = Settings::get_instance();
@@ -84,7 +85,7 @@ class Base {
 	/**
 	 * Method to set API args to an item info.
 	 *
-	 * @param array $item_info Set of API arguments.
+	 * @param  array  $item_info  Set of API arguments.
 	 */
 	public function set_item_info( $item_info ) {
 		$this->item_info = $item_info;
@@ -101,7 +102,7 @@ class Base {
 	 * Set API Environment value.
 	 */
 	public function set_api_url() {
-		$this->api_url  = ( true === $this->is_sandbox ) ? AVATAX_WC_SANDBOX_API_URL : AVATAX_WC_PROD_API_URL;
+		$this->api_url = ( true === $this->is_sandbox ) ? AVATAX_WC_SANDBOX_API_URL : AVATAX_WC_PROD_API_URL;
 		$this->api_url .= $this->endpoint;
 
 		if ( ! empty( $this->compose_url_params() ) && is_array( $this->compose_url_params() ) ) {
@@ -129,7 +130,7 @@ class Base {
 	 * Set API key value.
 	 */
 	public function set_api_auth() {
-		$this->auth_header    = base64_encode( $this->settings->get_account_username() . ':' . $this->settings->get_account_password() );
+		$this->auth_header = base64_encode( $this->settings->get_account_username() . ':' . $this->settings->get_account_password() );
 	}
 
 	/**
@@ -153,7 +154,8 @@ class Base {
 	public function get_basic_headers_args() {
 		return array(
 			'Authorization'    => 'Basic ' . $this->get_api_auth(),
-			'X-Avalara-Client' => $this->settings->get_avalara_client(),
+			'X-Avalara-Client' => 'a0o5a000007lz9IAAQ;Progressus;',
+			'X-Company-Id'     => $this->settings->get_avalara_company_id(),
 			'accept'           => 'application/json',
 			'Content-Type'     => 'application/json',
 		);
@@ -199,7 +201,7 @@ class Base {
 			$request_args['body'] = wp_json_encode( $this->compose_body_request() );
 		}
 
-		for ( $i = 1; $i <= 5; $i++ ) {
+		for ( $i = 1; $i <= 5; $i ++ ) {
 			$response = wp_remote_request( $api_url, $request_args );
 
 			if ( ! is_wp_error( $response ) ) {
@@ -211,7 +213,7 @@ class Base {
 			throw new \Exception( $response->get_error_message() );
 		}
 
-		$body_response   = wp_remote_retrieve_body( $response );
+		$body_response = wp_remote_retrieve_body( $response );
 
 		$this->check_response_error( $response );
 
@@ -221,13 +223,13 @@ class Base {
 	/**
 	 * Check if the response value has error or not.
 	 *
-	 * @param Mixed $response response value from the API call.
+	 * @param  Mixed  $response  response value from the API call.
 	 *
 	 * @throws \Exception Error when response has error.
 	 */
 	public function check_response_error( $response ) {
 
-		$status_code   = wp_remote_retrieve_response_code( $response );
+		$status_code = wp_remote_retrieve_response_code( $response );
 		if ( 401 === $status_code ) {
 			throw new \Exception( __( 'Unauthorized !', 'avatax-excise-xi' ) );
 		}
