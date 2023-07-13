@@ -7,6 +7,8 @@
 
 namespace AvataxWooCommerce\Settings;
 
+use AvataxWooCommerce\Utils;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -130,6 +132,21 @@ class Settings {
 				'placeholder' => '11223344',
 			),
 			array(
+				'id'          => 'avatax_avalara_enable_logging',
+				'title'       => esc_html__( 'Logging', 'avatax-excise-xi' ),
+				'type'        => 'checkbox',
+				'description' => sprintf(
+				// translators: %1$s is anchor opener tag and %2$s is anchor closer tag.
+					esc_html__( 'A log file containing the communication to the Avatax server will be maintained if this option is checked. This can be used in case of technical issues and can be found %1$shere%2$s.', 'avatax-excise-xi' ),
+					'<a href="' . esc_url( Utils::get_log_url() ) . '" target="_blank">',
+					'</a>'
+				),
+				'label'       => esc_html__( 'Enable', 'avatax-excise-xi' ),
+				'desc_tip'    => false,
+				'default'     => '',
+				'placeholder' => '',
+			),
+			array(
 				'id'   => 'avatax_settings',
 				'type' => 'sectionend',
 			),
@@ -179,5 +196,23 @@ class Settings {
 	 */
 	public function is_sandbox() {
 		return ( 'sandbox' === $this->get_environment_mode() );
+	}
+
+	/**
+	 * Get enable logging value from the settings.
+	 *
+	 * @return string.
+	 */
+	public function get_enable_logging() {
+		return get_option( 'avatax_avalara_enable_logging' );
+	}
+
+	/**
+	 * Return true if enable logging field is ticked.
+	 *
+	 * @return bool.
+	 */
+	public function is_logging_enabled() {
+		return ( 'yes' === $this->get_enable_logging() );
 	}
 }

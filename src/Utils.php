@@ -187,4 +187,13 @@ class Utils {
 		json_decode( $value );
 		return json_last_error() === JSON_ERROR_NONE;
 	}
+
+	/**
+	 * Get log URL in the admin.
+	 *
+	 * @return string.
+	 */
+	public static function get_log_url() {
+		return Logger::get_log_url();
+	}
 }

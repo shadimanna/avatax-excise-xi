@@ -5,9 +5,10 @@
  * Description:
  * Author: Progressus
  * Author URI: #
+ *  * Version: 1.1.0
  * Tested up to: 6.2
  * WC requires at least: 4.0
- * WC tested up to: 7.6
+ * WC tested up to: 7.8
  *
  * @package AvataxWooCommerce
  */

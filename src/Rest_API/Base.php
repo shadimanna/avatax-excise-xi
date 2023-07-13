@@ -7,6 +7,8 @@
 
 namespace AvataxWooCommerce\Rest_API;
 
+use AvataxWooCommerce\Logger;
+use AvataxWooCommerce\Main;
 use AvataxWooCommerce\Rest_API\Transaction\Item_Info;
 use AvataxWooCommerce\Settings\Settings;
 
@@ -70,12 +72,20 @@ class Base {
 	public $is_sandbox;
 
 	/**
+	 * Logger.
+	 *
+	 * @var Logger.
+	 */
+	public $logger;
+
+	/**
 	 * Class constructor.
 	 *
 	 * @param  Base_Info  $item_info  Set of Item_Info.
 	 */
 	public function __construct( $item_info ) {
 		$this->settings = Settings::get_instance();
+		$this->logger   = ( new Main )->get_logger();
 
 		$this->set_item_info( $item_info );
 		$this->check_api_mode();
@@ -85,7 +95,7 @@ class Base {
 	/**
 	 * Method to set API args to an item info.
 	 *
-	 * @param  array  $item_info  Set of API arguments.
+	 * @param  Item_Info  $item_info  Set of API arguments.
 	 */
 	public function set_item_info( $item_info ) {
 		$this->item_info = $item_info;
@@ -202,6 +212,10 @@ class Base {
 		}
 
 		for ( $i = 1; $i <= 5; $i ++ ) {
+			$this->logger->write( sprintf( 'Begin send request to %1$s', $api_url ) );
+			$this->logger->write( 'API Request:' );
+			$this->logger->write( $request_args );
+
 			$response = wp_remote_request( $api_url, $request_args );
 
 			if ( ! is_wp_error( $response ) ) {
@@ -210,10 +224,18 @@ class Base {
 		}
 
 		if ( is_wp_error( $response ) ) {
+			$this->logger->write( 'Get WP Error response:' );
+			$this->logger->write( $response );
+
 			throw new \Exception( $response->get_error_message() );
 		}
 
-		$body_response = wp_remote_retrieve_body( $response );
+		$body_response   = wp_remote_retrieve_body( $response );
+		$header_response = wp_remote_retrieve_headers( $response );
+
+		$this->logger->write( 'API Successful response:' );
+		$this->logger->write( $header_response );
+		$this->logger->write( $body_response );
 
 		$this->check_response_error( $response );
 

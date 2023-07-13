@@ -22,7 +22,7 @@ class Main {
 	 *
 	 * @var string.
 	 */
-	private $version = '1.0.0';
+	private $version = '1.1.0';
 
 	/**
 	 * Plugin name.
@@ -166,6 +166,13 @@ class Main {
 	 */
 	public function get_frontend() {
 		new Frontend\Cart();
+	}
+
+	/**
+	 * Get logger object.
+	 */
+	public function get_logger() {
+		return new Logger( $this->get_plugin_settings()->is_logging_enabled() );
 	}
 	
 	/**
