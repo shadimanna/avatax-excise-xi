@@ -114,7 +114,7 @@ class Settings {
 			array(
 				'id'          => 'avatax_account_password',
 				'title'       => esc_html__( 'Account password', 'avatax-excise-xi' ),
-				'type'        => 'text',
+				'type'        => 'password',
 				'description' => '',
 				'desc_tip'    => true,
 				'default'     => '',
