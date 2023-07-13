@@ -36,11 +36,12 @@ class Create extends Base {
 		$current_time = current_time( 'Y-m-d H:i:s' );
 
 		return array(
-			'TransactionLines' => $this->item_info->transaction_lines,
-			'TransactionType'  => apply_filters( 'avatax_transaction_type', 'WHOLESALE' ),
-			'EffectiveDate'    => $current_time,
-			'InvoiceDate'      => $current_time,
-			'InvoiceNumber'    => substr( uniqid(), 0, 10 ), // Random cart id
+			'TransactionLines'  => $this->item_info->transaction_lines,
+			'TransactionType'   => apply_filters( 'avatax_transaction_type', 'WHOLESALE' ),
+			'TitleTransferCode' => apply_filters( 'avatax_transfer_code', 'DEST' ),
+			'EffectiveDate'     => $current_time,
+			'InvoiceDate'       => $current_time,
+			'InvoiceNumber'     => substr( uniqid(), 0, 10 ), // Random cart id
 		);
 	}
 }
