@@ -171,4 +171,20 @@ class Utils {
 
 		return $final_args;
 	}
+
+	/**
+	 * Check if the string is JSON or not.
+	 *
+	 * @param Mixed $value String or value that will be validated.
+	 *
+	 * @return boolean.
+	 */
+	public static function is_json( $value ) {
+		if ( is_array( $value ) || is_object( $value ) ) {
+			return false;
+		}
+
+		json_decode( $value );
+		return json_last_error() === JSON_ERROR_NONE;
+	}
 }
