@@ -156,6 +156,16 @@ class Settings {
 				'placeholder' => '',
 			),
 			array(
+				'id'          => 'avatax_enable_committing',
+				'title'       => esc_html__( 'Committing', 'avatax-excise-xi' ),
+				'type'        => 'checkbox',
+				'description' => esc_html__( 'Commit tax liabilities for the order entries.', 'avatax-excise-xi' ),
+				'label'       => esc_html__( 'Enable', 'avatax-excise-xi' ),
+				'desc_tip'    => false,
+				'default'     => '',
+				'placeholder' => '',
+			),
+			array(
 				'id'   => 'avatax_settings',
 				'type' => 'sectionend',
 			),
@@ -232,5 +242,23 @@ class Settings {
 	 */
 	public function is_logging_enabled() {
 		return ( 'yes' === $this->get_enable_logging() );
+	}
+
+	/**
+	 * Get enable committing value from the settings.
+	 *
+	 * @return string.
+	 */
+	public function get_enable_committing() {
+		return get_option( 'avatax_enable_committing' );
+	}
+
+	/**
+	 * Return true if enable committing field is ticked.
+	 *
+	 * @return bool.
+	 */
+	public function is_committing_enabled() {
+		return ( 'yes' === $this->get_enable_committing() );
 	}
 }
