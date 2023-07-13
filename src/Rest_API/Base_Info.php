@@ -22,7 +22,7 @@ abstract class Base_Info {
 	 *
 	 * @var array.
 	 */
-	protected array $api_args;
+	public array $api_args;
 
 	/**
 	 * Class constructor.
@@ -32,9 +32,8 @@ abstract class Base_Info {
 	 * @throws \Exception
 	 */
 	public function __construct( $data ) {
-		$this->convert_data_to_args( $data );
-		$this->set_extra_data_to_api_args();
 		$this->set_store_address_data();
+		$this->convert_data_to_args( $data );
 		$this->parse_args();
 	}
 
@@ -51,12 +50,6 @@ abstract class Base_Info {
 	 * @param  array  $data.
 	 */
 	abstract public function convert_data_to_args( $data );
-
-	/**
-	 * Set extra API args.
-	 */
-	public function set_extra_data_to_api_args() {
-	}
 
 	/**
 	 * Set API args with store address data from WC settings.
