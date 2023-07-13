@@ -132,7 +132,16 @@ class Settings {
 				'placeholder' => '11223344',
 			),
 			array(
-				'id'          => 'avatax_avalara_enable_logging',
+				'id'          => 'avatax_shipping_product_code',
+				'title'       => esc_html__( 'Shipping product code', 'avatax-excise-xi' ),
+				'type'        => 'text',
+				'description' => '',
+				'desc_tip'    => true,
+				'default'     => '',
+				'placeholder' => '11223344',
+			),
+			array(
+				'id'          => 'avatax_enable_logging',
 				'title'       => esc_html__( 'Logging', 'avatax-excise-xi' ),
 				'type'        => 'checkbox',
 				'description' => sprintf(
@@ -199,12 +208,21 @@ class Settings {
 	}
 
 	/**
+	 * Get shipping product code.
+	 *
+	 * @return string.
+	 */
+	public function get_shipping_product_code() {
+		return get_option( 'avatax_shipping_product_code' );
+	}
+
+	/**
 	 * Get enable logging value from the settings.
 	 *
 	 * @return string.
 	 */
 	public function get_enable_logging() {
-		return get_option( 'avatax_avalara_enable_logging' );
+		return get_option( 'avatax_enable_logging' );
 	}
 
 	/**
