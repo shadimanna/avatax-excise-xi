@@ -25,36 +25,36 @@ class Cart {
 	 * Initializes the Cart class and hooks into the integration.
 	 */
 	public function __construct() {
-		//add_filter( 'woocommerce_calc_tax', array( $this, 'override_tax_calculation' ), 10, 3 );
-		add_action( 'woocommerce_review_order_after_shipping', array( $this, 'send_woocommerce_checkout_data' ) );
+		add_action( 'woocommerce_cart_calculate_fees', array( $this, 'add_cart_fees' ), 10 );
 	}
 
 	/**
 	 * Overrides the tax calculation for WooCommerce.
 	 *
-	 * @param array $taxes The calculated taxes.
-	 * @param float $price The price.
-	 * @param array $rates The tax rates.
+	 * @param $cart
 	 *
-	 * @return array         The modified taxes.
 	 */
-	public function override_tax_calculation( $taxes, $price, $rates ) {
+	public function add_cart_fees() {
+		global $woocommerce;
+
 		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
-			return $taxes;
+			return;
 		}
 
-		$avatax_tax = $this->total_tax_amount;
+		$avatax_tax_amount = $this->get_cart_tax();
 
-		$new_taxes = array();
-		foreach ( $taxes as $key => $tax ) {
-			$new_taxes[ $key ] = (float) $avatax_tax * 100;  // Set each tax to the fixed tax amount
+		if ( ! empty( $avatax_tax_amount ) ) {
+			$woocommerce->cart->add_fee( __( 'Avatax Tax', 'avatax-excise-xi' ), $avatax_tax_amount, false, 'tax' );
 		}
-
-		return $new_taxes;
 	}
 
-	public function get_cart_tax(){
-		try{
+	/**
+	 * Get cart tax value.
+	 *
+	 * @return float|void
+	 */
+	public function get_cart_tax() {
+		try {
 			$post_data = $this->get_checkout_post_data();
 
 			if ( empty( $post_data ) ) {
@@ -62,13 +62,15 @@ class Cart {
 			}
 
 			$item_info = new Transaction\Item_Info( $post_data );
-			$api_call = new Transaction\Create( $item_info );
+			$api_call  = new Transaction\Create( $item_info );
 
 			$response = $api_call->send_request();
 
-			error_log(print_r($response,true));
+			return $response['TotalTaxAmount'] ?? 0;
+
 		} catch ( \Exception $e ) {
 			wc_add_notice( $e->getMessage(), 'error' );
+			return;
 		}
 	}
 
