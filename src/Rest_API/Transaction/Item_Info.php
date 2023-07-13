@@ -25,7 +25,7 @@ class Item_Info extends Base_Info {
 	 *
 	 * @var array.
 	 */
-	protected array $api_args;
+	public array $api_args;
 
 	/**
 	 * Transaction data.
@@ -66,7 +66,6 @@ class Item_Info extends Base_Info {
 			'postcode' => ( ! empty( $data['shipping_postcode'] ) ) ? $data['shipping_postcode'] : '',
 		);
 
-
 		$this->api_args['cart']['items'] = array();
 		$cart_contents                   = WC()->cart->get_cart_contents();
 		$item_invoice_line               = 1;
@@ -80,17 +79,19 @@ class Item_Info extends Base_Info {
 
 
 			$item = array(
-				'InvoiceLine'            => $item_invoice_line,
-				'ProductCode'            => $product->get_sku(),
-				'UnitPrice'              => $cart_item['line_subtotal'],
-				'BilledUnits'            => $cart_item['quantity'],
-				'UnitOfMeasure'          => $unit_of_measure,
-				'DestinationCountryCode' => $this->api_args['shipping_address']['country'],
-				'DestinationCity'        => $this->api_args['shipping_address']['city'],
-				'DestinationPostalCode'  => $this->api_args['shipping_address']['postcode'],
-				'SaleCountryCode'        => $this->api_args['store_address']['country'],
-				'SaleCity'               => $this->api_args['store_address']['city'],
-				'SalePostalCode'         => $this->api_args['store_address']['postcode'],
+				'InvoiceLine'             => $item_invoice_line,
+				'ProductCode'             => $product->get_sku(),
+				'UnitPrice'               => $cart_item['line_subtotal'],
+				'BilledUnits'             => $cart_item['quantity'],
+				'UnitOfMeasure'           => $unit_of_measure,
+				'DestinationCountryCode'  => $this->api_args['shipping_address']['country'],
+				'DestinationCity'         => $this->api_args['shipping_address']['city'],
+				'DestinationJurisdiction' => $this->api_args['shipping_address']['state'],
+				'DestinationPostalCode'   => $this->api_args['shipping_address']['postcode'],
+				'SaleCountryCode'         => $this->api_args['store_address']['country'],
+				'SaleCity'                => $this->api_args['store_address']['city'],
+				'SaleJurisdiction'        => $this->api_args['store_address']['state'],
+				'SalePostalCode'          => $this->api_args['store_address']['postcode'],
 			);
 
 			if ( ! empty( $unit_volume ) ) {
@@ -119,16 +120,20 @@ class Item_Info extends Base_Info {
 			'Currency'                => array(
 				'default' => get_woocommerce_currency()
 			),
-			'NetUnits'                => array(),
+			'BilledUnits'             => array(),
 			'UnitOfMeasure'           => array(),
 			'DestinationCountryCode'  => array(),
 			'DestinationCity'         => array(),
 			'DestinationPostalCode'   => array(),
-			'SaleCountryCode'         => array( 'default' => '' ),
-			'SaleCity'                => array( 'default' => '' ),
-			'SalePostalCode'          => array( 'default' => '' ),
-			'UnitWeight'              => array(),
-			'UnitWeightUnitOfMeasure' => array(),
+			'DestinationJurisdiction'   => array(),
+			'SaleCountryCode'         => array(),
+			'SaleCity'                => array(),
+			'SalePostalCode'          => array(),
+			'SaleJurisdiction'        => array(),
+			'UnitWeight'              => array( 'default' => '' ),
+			'UnitWeightUnitOfMeasure' => array( 'default' => '' ),
+			'UnitVolume'              => array( 'default' => '' ),
+			'UnitVolumeUnitOfMeasure' => array( 'default' => '' ),
 		);
 	}
 }
