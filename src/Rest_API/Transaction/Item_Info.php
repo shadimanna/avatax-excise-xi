@@ -59,6 +59,8 @@ class Item_Info extends Base_Info {
 	 * @param  array  $data  .
 	 */
 	public function convert_data_to_args( $data ) {
+		$data = Utils::set_post_data_address( $data );
+
 		$this->api_args['shipping_address'] = array(
 			'city'     => ( ! empty( $data['shipping_city'] ) ) ? $data['shipping_city'] : '',
 			'state'    => ( ! empty( $data['shipping_state'] ) ) ? $data['shipping_state'] : '',

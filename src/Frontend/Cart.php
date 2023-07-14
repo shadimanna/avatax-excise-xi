@@ -41,10 +41,22 @@ class Cart {
 			return;
 		}
 
+		$fee_name = __( 'Avatax Tax', 'avatax-excise-xi' );
+
+		$fees = $woocommerce->cart->get_fees();
+
+		foreach ( $fees as $key => $fee ) {
+			if ( $fees[ $key ]->name == $fee_name ) {
+				unset( $fees[ $key ] );
+			}
+		}
+
+		$woocommerce->cart->fees_api()->set_fees($fees);
+
 		$avatax_tax_amount = $this->get_cart_tax();
 
 		if ( ! empty( $avatax_tax_amount ) ) {
-			$woocommerce->cart->add_fee( __( 'Avatax Tax', 'avatax-excise-xi' ), $avatax_tax_amount, false, 'tax' );
+			$woocommerce->cart->add_fee( $fee_name, $avatax_tax_amount, false, 'tax' );
 		}
 	}
 
