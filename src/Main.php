@@ -118,6 +118,7 @@ class Main {
 		$this->get_plugin_settings();
 		$this->get_product_settings();
 		$this->get_frontend();
+		new Settings\User();
 	}
 
 	/**

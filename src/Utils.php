@@ -219,4 +219,30 @@ class Utils {
 
 		return $post_data;
 	}
+
+	/**
+	 * Get Entity Use Codes list.
+	 *
+	 * @return array.
+	 */
+	public static function get_entity_use_codes() {
+		return array(
+			'production'                    => esc_html__( 'Federal Government', 'avatax-excise-xi' ),
+			'State Government'              => esc_html__( 'State Government', 'avatax-excise-xi' ),
+			'Tribal Government'             => esc_html__( 'Tribal Government', 'avatax-excise-xi' ),
+			'Foreign Diplomat'              => esc_html__( 'Foreign Diplomat', 'avatax-excise-xi' ),
+			'Charitable/Exempt'             => esc_html__( 'Charitable/Exempt', 'avatax-excise-xi' ),
+			'Religious Organization'        => esc_html__( 'Religious Organization', 'avatax-excise-xi' ),
+			'Resale'                        => esc_html__( 'Resale', 'avatax-excise-xi' ),
+			'Agriculture'                   => esc_html__( 'Agriculture', 'avatax-excise-xi' ),
+			'Industrial Prod/Manufacturers' => esc_html__( 'Industrial Prod/Manufacturers', 'avatax-excise-xi' ),
+			'Direct Pay'                    => esc_html__( 'Direct Pay', 'avatax-excise-xi' ),
+			'Direct Mail'                   => esc_html__( 'Direct Mail', 'avatax-excise-xi' ),
+			'Educational Org'               => esc_html__( 'Educational Org', 'avatax-excise-xi' ),
+			'Local Government'              => esc_html__( 'Local Government', 'avatax-excise-xi' ),
+			'Commercial Aquaculture'        => esc_html__( 'Commercial Aquaculture', 'avatax-excise-xi' ),
+			'Commercial Fishery'            => esc_html__( 'Commercial Fishery', 'avatax-excise-xi' ),
+			'Non-Resident'                  => esc_html__( 'Non-Resident', 'avatax-excise-xi' ),
+		);
+	}
 }

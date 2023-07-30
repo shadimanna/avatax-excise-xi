@@ -141,6 +141,15 @@ class Settings {
 				'placeholder' => '11223344',
 			),
 			array(
+				'id'          => 'avatax_entity_use_code',
+				'title'       => esc_html__( 'Entity Use Codes', 'avatax-excise-xi' ),
+				'type'        => 'text',
+				'description' => '',
+				'desc_tip'    => true,
+				'default'     => 'Resale',
+				'options'     => Utils::get_entity_use_codes(),
+			),
+			array(
 				'id'          => 'avatax_enable_logging',
 				'title'       => esc_html__( 'Logging', 'avatax-excise-xi' ),
 				'type'        => 'checkbox',
@@ -260,5 +269,24 @@ class Settings {
 	 */
 	public function is_committing_enabled() {
 		return ( 'yes' === $this->get_enable_committing() );
+	}
+
+	/**
+	 * Get customer Entity Use Codes if set, or default value.]
+	 *
+	 * @return string.
+	 */
+	public function get_entity_use_code() {
+		$customer_entity_use_code = get_user_meta( get_current_user_id(), '_avatax_entity_use_code', true );
+		if ( $customer_entity_use_code && '' !== $customer_entity_use_code ) {
+			return $customer_entity_use_code;
+		}
+
+		$default_entity_use_code = get_option( 'avatax_entity_use_code' );
+		if ( $default_entity_use_code && '' !== $default_entity_use_code ) {
+			return $default_entity_use_code;
+		}
+
+		return 'Resale';
 	}
 }
