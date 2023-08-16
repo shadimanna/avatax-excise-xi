@@ -62,7 +62,7 @@ class Cart {
 	/**
 	 * Get cart tax value.
 	 *
-	 * @return float|void
+	 * @return float
 	 */
 	public function get_cart_tax() {
 		try {
@@ -81,7 +81,7 @@ class Cart {
 
 		} catch ( \Exception $e ) {
 			wc_add_notice( $e->getMessage(), 'error' );
-			return;
+			return 0;
 		}
 	}
 
