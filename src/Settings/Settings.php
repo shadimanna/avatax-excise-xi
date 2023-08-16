@@ -143,7 +143,8 @@ class Settings {
 			array(
 				'id'          => 'avatax_entity_use_code',
 				'title'       => esc_html__( 'Entity Use Codes', 'avatax-excise-xi' ),
-				'type'        => 'text',
+				'type'        => 'select',
+				'class'       => 'wc-enhanced-select',
 				'description' => '',
 				'desc_tip'    => true,
 				'default'     => 'Resale',

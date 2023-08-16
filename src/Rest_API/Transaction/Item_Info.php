@@ -56,7 +56,7 @@ class Item_Info extends Base_Info {
 	/**
 	 * Method to convert cart data to API args.
 	 *
-	 * @param  array  $data  .
+	 * @param array $data .
 	 */
 	public function convert_data_to_args( $data ) {
 		$data = Utils::set_post_data_address( $data );
@@ -75,16 +75,15 @@ class Item_Info extends Base_Info {
 		foreach ( $cart_contents as $cart_item ) {
 			$product                = $cart_item['data'];
 			$unit_of_measure        = $product->get_meta( '_avatax_unit_of_measure' );
-			$qty_unit_of_measure    = $product->get_meta( '_avatax_qty_unit_of_measure' );
 			$unit_volume            = $product->get_meta( '_avatax_unit_volume' );
 			$volume_unit_of_measure = $product->get_meta( '_avatax_volume_unit_of_measure' );
-
 
 			$item = array(
 				'InvoiceLine'             => $item_invoice_line,
 				'ProductCode'             => $product->get_sku(),
-				'UnitPrice'               => $cart_item['line_subtotal'],
+				'UnitPrice'               => $product->get_price(),
 				'BilledUnits'             => $cart_item['quantity'],
+				'NetUnits'                => $cart_item['quantity'],
 				'UnitOfMeasure'           => $unit_of_measure,
 				'DestinationCountryCode'  => $this->api_args['shipping_address']['country'],
 				'DestinationCity'         => $this->api_args['shipping_address']['city'],
@@ -127,7 +126,7 @@ class Item_Info extends Base_Info {
 			'DestinationCountryCode'  => array(),
 			'DestinationCity'         => array(),
 			'DestinationPostalCode'   => array(),
-			'DestinationJurisdiction'   => array(),
+			'DestinationJurisdiction' => array(),
 			'SaleCountryCode'         => array(),
 			'SaleCity'                => array(),
 			'SalePostalCode'          => array(),

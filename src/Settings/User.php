@@ -31,8 +31,8 @@ Class User {
 	 * Collection of hooks when initiation.
 	 */
 	public function init_hooks() {
-		add_filter( 'show_user_profile', array( $this, 'user_profile_fields' ) );
-		add_action( 'edit_user_profile', array( $this, 'user_profile_fields' ) );
+		add_filter( 'show_user_profile', array( $this, 'user_profile_fields' ), 20 );
+		add_action( 'edit_user_profile', array( $this, 'user_profile_fields' ), 20 );
 
 		add_action( 'personal_options_update', array( $this, 'save_user_profile_fields' ) );
 		add_action( 'edit_user_profile_update', array( $this, 'save_user_profile_fields' ) );

@@ -227,7 +227,7 @@ class Utils {
 	 */
 	public static function get_entity_use_codes() {
 		return array(
-			'production'                    => esc_html__( 'Federal Government', 'avatax-excise-xi' ),
+			'Federal Government'            => esc_html__( 'Federal Government', 'avatax-excise-xi' ),
 			'State Government'              => esc_html__( 'State Government', 'avatax-excise-xi' ),
 			'Tribal Government'             => esc_html__( 'Tribal Government', 'avatax-excise-xi' ),
 			'Foreign Diplomat'              => esc_html__( 'Foreign Diplomat', 'avatax-excise-xi' ),
