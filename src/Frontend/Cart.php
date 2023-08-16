@@ -43,15 +43,14 @@ class Cart {
 
 		$fee_name = __( 'Avatax Tax', 'avatax-excise-xi' );
 
+		// Reset Avatax taxes
 		$fees = $woocommerce->cart->get_fees();
-
 		foreach ( $fees as $key => $fee ) {
 			if ( $fees[ $key ]->name == $fee_name ) {
 				unset( $fees[ $key ] );
 			}
 		}
-
-		$woocommerce->cart->fees_api()->set_fees($fees);
+		$woocommerce->cart->fees_api()->set_fees( $fees );
 
 		$avatax_tax_amount = $this->get_cart_tax();
 
