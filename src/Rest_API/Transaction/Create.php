@@ -42,7 +42,7 @@ class Create extends Base {
 			'EffectiveDate'     => $current_time,
 			'InvoiceDate'       => $current_time,
 			'InvoiceNumber'     => substr( uniqid(), 0, 10 ), // Random cart id
-			'SourceSystem'      => 'Avatax for WooCommerce',
+			'SourceSystem'      => 'Progressus v1.0; a0o5a000007lz9IAAQ',
 			'EntityUseCode'     => $this->settings->get_entity_use_code(),
 		);
 	}
