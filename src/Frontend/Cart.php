@@ -8,18 +8,13 @@
 namespace AvataxWooCommerce\Frontend;
 
 use AvataxWooCommerce\Rest_API\Transaction;
+use AvataxWooCommerce\Rest_API\Transaction\Void_Transaction;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class Cart {
-	/**
-	 * avatax_tax field name.
-	 *
-	 * @var float
-	 */
-	private $total_tax_amount;
 
 	/**
 	 * Initializes the Cart class and hooks into the integration.
@@ -43,33 +38,45 @@ class Cart {
 
 		$fee_name = __( 'Avatax Tax', 'avatax-excise-xi' );
 
-		// Reset Avatax taxes
-		$fees = $woocommerce->cart->get_fees();
-		foreach ( $fees as $key => $fee ) {
-			if ( $fees[ $key ]->name == $fee_name ) {
-				unset( $fees[ $key ] );
+		$post_data = $this->get_checkout_post_data();
+		if ( ! empty( $post_data ) ) {
+			// Reset Avatax taxes
+			$fees = $woocommerce->cart->get_fees();
+			foreach ( $fees as $key => $fee ) {
+				if ( $fees[ $key ]->name == $fee_name ) {
+					unset( $fees[ $key ] );
+				}
 			}
+			$woocommerce->cart->fees_api()->set_fees( $fees );
+
+			$avatax_tax = WC()->session->get( 'avatax_cart_tax' );
+			if ( ! empty( $avatax_tax['id'] ) ) {
+				$api_call = new Void_Transaction( $avatax_tax['id'] );
+				$api_call->send_request();
+
+				WC()->session->set( 'avatax_cart_tax', array() );
+			}
+
 		}
-		$woocommerce->cart->fees_api()->set_fees( $fees );
 
 		$avatax_tax_amount = $this->get_cart_tax();
-
-		if ( ! empty( $avatax_tax_amount ) ) {
-			$woocommerce->cart->add_fee( $fee_name, $avatax_tax_amount, false, 'tax' );
+		if ( isset( $avatax_tax_amount['value'] ) && $avatax_tax_amount['value'] > 0 ) {
+			$woocommerce->cart->add_fee( $fee_name, $avatax_tax_amount['value'], false, 'tax' );
+			WC()->session->set( 'avatax_cart_tax', $avatax_tax_amount );
 		}
 	}
 
 	/**
 	 * Get cart tax value.
 	 *
-	 * @return float
+	 * @return array
 	 */
 	public function get_cart_tax() {
 		try {
 			$post_data = $this->get_checkout_post_data();
 
 			if ( empty( $post_data ) ) {
-				return;
+				return array();
 			}
 
 			$item_info = new Transaction\Item_Info( $post_data );
@@ -77,11 +84,11 @@ class Cart {
 
 			$response = $api_call->send_request();
 
-			return $response['TotalTaxAmount'] ?? 0;
+			return isset( $response['TotalTaxAmount'] ) ? array( 'id' => $response['UserTranId'], 'value' => $response['TotalTaxAmount'], ) : array();
 
 		} catch ( \Exception $e ) {
 			wc_add_notice( $e->getMessage(), 'error' );
-			return 0;
+			return array();
 		}
 	}
 

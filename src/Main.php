@@ -119,6 +119,7 @@ class Main {
 		$this->get_product_settings();
 		$this->get_frontend();
 		new Settings\User();
+        new Order\Base();
 	}
 
 	/**
