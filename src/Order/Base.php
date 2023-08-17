@@ -68,6 +68,8 @@ class Base {
 			$order->add_item( $tax );
 			$order->set_total( $order->get_total() + $avatax_tax['value'] );
 			$order->save();
+
+			WC()->session->set( 'avatax_cart_tax', array() );
 		}
 	}
 
