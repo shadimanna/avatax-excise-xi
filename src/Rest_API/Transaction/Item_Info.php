@@ -122,6 +122,7 @@ class Item_Info extends Base_Info {
 				'default' => get_woocommerce_currency()
 			),
 			'BilledUnits'             => array(),
+			'NetUnits'                => array(),
 			'UnitOfMeasure'           => array(),
 			'DestinationCountryCode'  => array(),
 			'DestinationCity'         => array(),
