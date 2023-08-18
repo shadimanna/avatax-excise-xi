@@ -35,7 +35,6 @@ class Base {
 	 */
 	public function init_hooks() {
 		add_action( 'woocommerce_checkout_create_order', array( $this, 'calculate_taxes' ), 10, 1 );
-		add_action( 'woocommerce_checkout_create_order', array( $this, 'save_tax_data' ), 10, 1 );
 		add_action( 'woocommerce_order_status_processing', array( $this, 'commit_invoice' ), 10, 1 );
 
 		add_action( 'woocommerce_order_status_cancelled', array( $this, 'void_invoice' ), 10, 1 );
@@ -67,27 +66,12 @@ class Base {
 			$tax->save();
 			$order->add_item( $tax );
 			$order->set_total( $order->get_total() + $avatax_tax['value'] );
-			$order->save();
 
-			WC()->session->set( 'avatax_cart_tax', array() );
-		}
-	}
-
-	/**
-	 * @param $order \WC_order
-	 *
-	 * @return void
-	 */
-	public function save_tax_data( $order ) {
-		if ( ! is_a( $order, 'WC_Order' ) ) {
-			return;
-		}
-
-		$avatax_tax = WC()->session->get( 'avatax_cart_tax' );
-		if ( ! empty( $avatax_tax ) ) {
 			$order->add_meta_data( '_avatax_id', $avatax_tax['id'] );
 			$order->add_order_note( __( 'Avatax ID : ', 'avatax-excise-xi' ) . $avatax_tax['id'], false );
 			$order->save();
+
+			WC()->session->set( 'avatax_cart_tax', array() );
 		}
 	}
 
