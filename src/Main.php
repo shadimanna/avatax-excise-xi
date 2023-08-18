@@ -51,6 +51,13 @@ class Main {
 	 * @var Product\Single
 	 */
 	public $product = null;
+
+	/**
+	 * Orders List.
+	 *
+	 * @var Order\Orders_List
+	 */
+	public $orders_list = null;
 	
 	/**
 	 * Instance to call certain functions globally within the plugin
@@ -118,6 +125,7 @@ class Main {
 		$this->get_plugin_settings();
 		$this->get_product_settings();
 		$this->get_frontend();
+        $this->get_orders_list();
 		new Settings\User();
         new Order\Base();
 	}
@@ -168,6 +176,19 @@ class Main {
 	 */
 	public function get_frontend() {
 		new Frontend\Cart();
+	}
+
+	/**
+	 * Get orders list class.
+	 *
+	 * @return Order\Orders_List
+	 */
+	public function get_orders_list() {
+		if ( empty( $this->orders_list ) ) {
+			$this->orders_list = new Order\Orders_List();
+		}
+
+		return $this->orders_list;
 	}
 
 	/**
