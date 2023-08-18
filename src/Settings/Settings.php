@@ -7,6 +7,7 @@
 
 namespace AvataxWooCommerce\Settings;
 
+use AvataxWooCommerce\Rest_API\Ping;
 use AvataxWooCommerce\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -39,6 +40,9 @@ class Settings {
 	public function init_hooks() {
 		add_filter( 'woocommerce_get_sections_tax', array( $this, 'add_setting_section' ) );
 		add_action( 'woocommerce_get_settings_tax', array( $this, 'setting_fields' ), 10, 2 );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts') );
+		add_action( 'wp_ajax_avatax_test_connection', array( $this, 'avatax_test_connection_callback' ) );
 	}
 
 	/**
@@ -94,8 +98,12 @@ class Settings {
 				'id'          => 'avatax_environment_mode',
 				'title'       => esc_html__( 'Environment Mode', 'avatax-excise-xi' ),
 				'type'        => 'select',
-				'desc'        => __( 'Choose the environment mode.', 'avatax-excise-xi' ),
-				'desc_tip'    => true,
+				'desc'        => sprintf(
+				// translators: %1$s is anchor opener tag and %2$s is anchor closer tag.
+					esc_html__( '%1$sTest Connection%2$s', 'avatax-excise-xi' ),
+					'<button id="avatax_test_connection" type="button">',
+					'</button>'
+				),
 				'options'     => array(
 					'production' => esc_html__( 'Production', 'avatax-excise-xi' ),
 					'sandbox'    => esc_html__( 'Sandbox', 'avatax-excise-xi' ),
@@ -309,5 +317,68 @@ class Settings {
 		}
 
 		return 'Resale';
+	}
+
+	/**
+	 * Enqueue Scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		// Enqueue Scripts
+		$screen = get_current_screen();
+
+		if ( 'woocommerce_page_wc-settings' === ( $screen ? $screen->id : '' ) ) {
+			$test_con_data = array(
+				'ajax_url'       => admin_url( 'admin-ajax.php' ),
+				'loader_image'   => admin_url( 'images/loading.gif' ),
+				'test_con_nonce' => wp_create_nonce( 'avatax-check-connection' ),
+			);
+
+			wp_enqueue_script(
+				'avatax-test-connection',
+				AVATAX_WC_PLUGIN_DIR_URL . '/assets/js/avatax-test-connection.js',
+				array( 'jquery' ),
+				AVATAX_WC_VERSION,
+				true,
+			);
+
+			wp_localize_script( 'avatax-test-connection', 'avatax_test_connection', $test_con_data );
+		}
+	}
+
+	/**
+	 * Test Connection Ajax Request.
+	 *
+	 * @return void
+	 */
+	public function avatax_test_connection_callback() {
+		check_ajax_referer( 'avatax-check-connection', 'test_con_nonce' );
+
+		try {
+			$api_call = new Ping();
+			$response = $api_call->send_request();
+
+			error_log(print_r($response,true));
+			if ( $response['authenticated'] ) {
+				wp_send_json( array(
+					'connection_success' => true,
+					'status_text'        => 'Authenticated',
+				) );
+			} else {
+				wp_send_json( array(
+					'connection_success' => false,
+					'status_text'        => 'Unauthenticated !',
+				) );
+			}
+		} catch ( \Exception $e ) {
+			error_log($e->getMessage());
+			wp_send_json( array(
+				'connection_success' => false,
+				'status_text'        => 'Connection Failed',
+			) );
+		}
+
+		wp_die();
 	}
 }
