@@ -100,7 +100,7 @@ class Item_Info extends Base_Info {
 				$item['UnitVolumeUnitOfMeasure'] = $volume_unit_of_measure;
 			} else {
 				$item['UnitWeight']              = $product->get_weight();
-				$item['UnitWeightUnitOfMeasure'] = 'KG';
+				$item['UnitWeightUnitOfMeasure'] = get_option( 'woocommerce_weight_unit' );
 			}
 
 			$this->api_args['cart']['items'][] = $item;
