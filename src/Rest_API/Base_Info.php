@@ -62,11 +62,17 @@ abstract class Base_Info {
 			'postcode' => WC()->countries->get_base_postcode(),
 		);
 
-		$this->api_args['sale_address'] = array(
-			'city'     => get_option( 'SaleCity' ),
-			'state'    => get_option( 'SaleJurisdiction' ),
-			'country'  => get_option( 'SaleCountryCode' ),
-			'postcode' => get_option( 'SalePostalCode' ),
-		);
+
+		// Sale Address
+		if ( 'yes' !== get_option( 'avatax_use_store_address_as_sale' ) ) {
+			$this->api_args['sale_address'] = $this->api_args['store_address'];
+		} else {
+			$this->api_args['sale_address'] = array(
+				'city'     => get_option( 'avatax_sale_address_city' ),
+				'state'    => get_option( 'avatax_sale_address_state' ),
+				'country'  => get_option( 'avatax_sale_address_country' ),
+				'postcode' => get_option( 'avatax_sale_address_postcode' ),
+			);
+		}
 	}
 }

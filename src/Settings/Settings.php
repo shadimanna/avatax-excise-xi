@@ -158,35 +158,45 @@ class Settings {
 				'label' => esc_html__( 'Enable', 'avatax-excise-xi' ),
 			),
 			array(
-				'id'    => 'sale_address_settings_title',
+				'id'   => 'avatax_settings',
+				'type' => 'sectionend',
+			),
+			array(
+				'id'    => 'avatax_sale_address',
 				'title' => esc_html__( 'Sale Address', 'postnl-for-woocommerce' ),
 				'type'  => 'title',
 				'desc'  => __( 'you can keep it empty to use store address as a sale address', 'avatax-excise-xi' ),
 			),
 			array(
-				'id'      => 'sale_address_country',
+				'id'    => 'avatax_use_store_address_as_sale',
+				'title' => esc_html__( 'Use Store Address as a Sale Address', 'avatax-excise-xi' ),
+				'type'  => 'checkbox',
+				'desc'  => esc_html__( 'No need to fill the sale address after checking this, and it will use the store address for it.', 'avatax-excise-xi' ),
+			),
+			array(
+				'id'      => 'avatax_sale_address_country',
 				'title'   => esc_html__( 'Country', 'avatax-excise-xi' ),
 				'type'    => 'select',
 				'class'   => 'wc-enhanced-select',
 				'options' => WC()->countries->get_countries(),
 			),
 			array(
-				'id'    => 'sale_address_city',
+				'id'    => 'avatax_sale_address_city',
 				'title' => esc_html__( 'City', 'avatax-excise-xi' ),
 				'type'  => 'text',
 			),
 			array(
-				'id'    => 'sale_address_state',
+				'id'    => 'avatax_sale_address_state',
 				'title' => esc_html__( 'State', 'avatax-excise-xi' ),
 				'type'  => 'text',
 			),
 			array(
-				'id'    => 'sale_address_postcode',
+				'id'    => 'avatax_sale_address_postcode',
 				'title' => esc_html__( 'Postal code', 'avatax-excise-xi' ),
 				'type'  => 'text',
 			),
 			array(
-				'id'   => 'avatax_settings',
+				'id'   => 'avatax_sale_address',
 				'type' => 'sectionend',
 			),
 		);
