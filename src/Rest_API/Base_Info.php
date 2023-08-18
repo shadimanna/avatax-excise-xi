@@ -56,10 +56,17 @@ abstract class Base_Info {
 	 */
 	public function set_store_address_data() {
 		$this->api_args['store_address'] = array(
-			'city'      => WC()->countries->get_base_city(),
-			'state'     => WC()->countries->get_base_state(),
-			'country'   => WC()->countries->get_base_country(),
-			'postcode'  => WC()->countries->get_base_postcode(),
+			'city'     => WC()->countries->get_base_city(),
+			'state'    => WC()->countries->get_base_state(),
+			'country'  => WC()->countries->get_base_country(),
+			'postcode' => WC()->countries->get_base_postcode(),
+		);
+
+		$this->api_args['sale_address'] = array(
+			'city'     => get_option( 'SaleCity' ),
+			'state'    => get_option( 'SaleJurisdiction' ),
+			'country'  => get_option( 'SaleCountryCode' ),
+			'postcode' => get_option( 'SalePostalCode' ),
 		);
 	}
 }

@@ -161,9 +161,6 @@ class Settings {
 					'</a>'
 				),
 				'label'       => esc_html__( 'Enable', 'avatax-excise-xi' ),
-				'desc_tip'    => false,
-				'default'     => '',
-				'placeholder' => '',
 			),
 			array(
 				'id'          => 'avatax_enable_committing',
@@ -171,9 +168,46 @@ class Settings {
 				'type'        => 'checkbox',
 				'description' => esc_html__( 'Commit tax liabilities for the order entries.', 'avatax-excise-xi' ),
 				'label'       => esc_html__( 'Enable', 'avatax-excise-xi' ),
-				'desc_tip'    => false,
+				'desc_tip'    => true,
+			),
+			'sale_address_settings_title' => array(
+				'title'       => esc_html__( 'Sale Address', 'postnl-for-woocommerce' ),
+				'type'        => 'title',
+				'description' => __( 'you can keep it empty to use store address as a sale address', 'avatax-excise-xi' ),
+			),
+			array(
+				'id'          => 'sale_address_country',
+				'title'       => esc_html__( 'Country', 'avatax-excise-xi' ),
+				'type'        => 'select',
+				'class'       => 'wc-enhanced-select',
+				'description' => '',
+				'desc_tip'    => true,
 				'default'     => '',
-				'placeholder' => '',
+				'options'     => WC()->countries->get_countries(),
+			),
+			array(
+				'id'          => 'sale_address_city',
+				'title'       => esc_html__( 'City', 'avatax-excise-xi' ),
+				'type'        => 'text',
+				'description' => '',
+				'desc_tip'    => true,
+				'default'     => '',
+			),
+			array(
+				'id'          => 'sale_address_state',
+				'title'       => esc_html__( 'State', 'avatax-excise-xi' ),
+				'type'        => 'text',
+				'description' => '',
+				'desc_tip'    => true,
+				'default'     => '',
+			),
+			array(
+				'id'          => 'sale_address_postcode',
+				'title'       => esc_html__( 'Postal code', 'avatax-excise-xi' ),
+				'type'        => 'text',
+				'description' => '',
+				'desc_tip'    => true,
+				'default'     => '',
 			),
 			array(
 				'id'   => 'avatax_settings',
@@ -273,7 +307,7 @@ class Settings {
 	}
 
 	/**
-	 * Get customer Entity Use Codes if set, or default value.]
+	 * Get customer Entity Use Codes if set, or default value.
 	 *
 	 * @return string.
 	 */
